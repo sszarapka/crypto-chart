@@ -1,0 +1,13 @@
+.page {
+  display: grid;
+  //grid-gap: 20px;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 8fr 6fr 1fr;
+  grid-template-areas:
+    "header"
+    "chart"
+    "data"
+    "footer";
+
+  background-color: $grey;
+}

@@ -1,1 +1,35 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-area: header;
+  background-color: $grey;
+  .logo {
+    width: 40px;
+  }
+  .header__search {
+    margin-right: 10px;
+    display: flex;
+    .search__input {
+      background-color: $white;
+      border: 2px solid aqua;
+      border-radius: 5px 0 0 5px;
+      border-right: none;
+      line-height: 160%;
+      padding: 0 5px;
+    }
+    .search__input:focus {
+      outline: none;
+    }
 
+    .search__button {
+      border: 2px solid aqua;
+      border-radius: 0 5px 5px 0;
+      border-left: none;
+      align-self: stretch;
+      margin-left: 2px;
+      padding: 4px;
+      background-color: $white;
+    }
+  }
+}

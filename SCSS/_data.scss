@@ -1,0 +1,14 @@
+.data {
+  grid-area: data;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  .data__item {
+    width: 90%;
+    border-radius: 5px;
+    margin: 10px 0;
+    flex-grow: 1;
+    background-color: $light-grey;
+  }
+}
