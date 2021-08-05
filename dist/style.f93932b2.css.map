@@ -1,0 +1,1 @@
+{"version":3,"sources":["SCSS\\_reset.scss"],"names":[],"mappings":"AAAA;EACE;EACA;EACA","file":"style.f93932b2.css","sourceRoot":"..","sourcesContent":["* {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n"]}
