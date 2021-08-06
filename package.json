@@ -21,5 +21,9 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
     "sass": "^1.37.5"
+  },
+  "dependencies": {
+    "core-js": "^3.16.0",
+    "regenerator-runtime": "^0.13.9"
   }
 }
