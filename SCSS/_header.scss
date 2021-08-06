@@ -1,35 +1,87 @@
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  grid-area: header;
-  background-color: $grey;
-  .logo {
-    width: 40px;
-  }
-  .header__search {
-    margin-right: 10px;
     display: flex;
-    .search__input {
-      background-color: $white;
-      border: 2px solid aqua;
-      border-radius: 5px 0 0 5px;
-      border-right: none;
-      line-height: 160%;
-      padding: 0 5px;
+    align-items: center;
+    justify-content: space-between;
+    grid-area: header;
+    background-color: $grey;
+    .logo {
+        width: 40px;
     }
-    .search__input:focus {
-      outline: none;
-    }
+    .search-container {
+        position: relative;
+        .header__search {
+            margin-right: 10px;
+            display: flex;
+            border: none;
+            .search-input-container {
+                position: relative;
+                border-bottom: 1px solid $white;
+                overflow: hidden;
+                .search__input {
+                    background-color: transparent;
+                    border-bottom: 1px solid $white;
 
-    .search__button {
-      border: 2px solid aqua;
-      border-radius: 0 5px 5px 0;
-      border-left: none;
-      align-self: stretch;
-      margin-left: 2px;
-      padding: 4px;
-      background-color: $white;
+                    line-height: 160%;
+                    padding: 0 5px;
+                    border: none;
+                    margin: 0;
+                    color: $white;
+                }
+                .search__input--line {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    transform: translateX(-100%);
+                    height: 2px;
+                    width: 100%;
+                    background-color: $white;
+                    transition: 0.2s ease;
+                }
+            }
+
+            .search__input:focus {
+                outline: none;
+            }
+
+            .search__input:focus ~ .search__input--line {
+                transform: translateX(0);
+            }
+
+            .search__button {
+                border: none;
+                border-bottom: 1px solid $white;
+
+                align-self: stretch;
+                margin-left: 2px;
+                padding: 4px;
+                color: $white;
+                background-color: transparent;
+            }
+        }
+        .search__list {
+            position: absolute;
+
+            left: 0;
+            right: 10px;
+            background-color: $light-grey;
+            //border: 1px solid $black;
+            .list__item {
+                display: flex;
+                align-items: center;
+                padding: 5px 5px;
+                border-bottom: 1px solid $grey;
+                list-style: none;
+                .coin__logo {
+                    width: 25px;
+                }
+                .coin__name {
+                    margin-left: 7px;
+                    color: $white;
+                }
+            }
+            .list__item:last-child {
+                border-bottom: none;
+            }
+        }
     }
-  }
 }

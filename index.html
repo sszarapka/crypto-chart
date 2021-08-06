@@ -1,39 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script
-      src="https://kit.fontawesome.com/d078e3e1b8.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="SCSS/style.scss" />
-  </head>
-  <body>
-    <div class="page">
-      <header class="header">
-        <img src="IMG/tomato-logo.png" alt="" class="logo" />
-        <div class="header__search search">
-          <input type="text" class="search__input" />
-          <button class="search__button"><i class="fas fa-search"></i></button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script
+            src="https://kit.fontawesome.com/d078e3e1b8.js"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="SCSS/style.scss" />
+    </head>
+    <body>
+        <div class="page">
+            <header class="header">
+                <img src="IMG/tomato-logo.png" alt="" class="logo" />
+                <div class="search-container">
+                    <div class="header__search search">
+                        <div class="search-input-container">
+                            <input type="text" class="search__input" />
+                            <div class="search__input--line"></div>
+                        </div>
+                        <button class="search__button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <ul class="search__list list">
+                        <!-- <li class="list__item coin">
+                            <img
+                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
+                                alt=""
+                                class="coin__logo"
+                            />
+                            <p class="coin__name">Bitcoin</p>
+                        </li>
+                        <li class="list__item coin">
+                            <img
+                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
+                                alt=""
+                                class="coin__logo"
+                            />
+                            <p class="coin__name">Bitcoin</p>
+                        </li>
+                        <li class="list__item coin">
+                            <img
+                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
+                                alt=""
+                                class="coin__logo"
+                            />
+                            <p class="coin__name">Bitcoin</p>
+                        </li> -->
+                    </ul>
+                </div>
+            </header>
+            <main class="main">
+                <h2 class="main__name">Chart</h2>
+                <div class="main__chart"></div>
+            </main>
+
+            <section class="data">
+                <div class="data__item">1</div>
+                <div class="data__item">2</div>
+                <div class="data__item">3</div>
+                <div class="data__item">4</div>
+            </section>
+
+            <footer class="footer">&copy Stanisław Szarapka</footer>
         </div>
-      </header>
-      <main class="main">
-        <h2 class="main__name">Chart</h2>
-        <div class="main__chart"></div>
-      </main>
-
-      <section class="data">
-        <div class="data__item">1</div>
-        <div class="data__item">2</div>
-        <div class="data__item">3</div>
-        <div class="data__item">4</div>
-      </section>
-
-      <footer class="footer">&copy Stanisław Szarapka</footer>
-    </div>
-    <script src="index.js"></script>
-  </body>
+        <script src="index.js"></script>
+    </body>
 </html>
