@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime'
 class Elements {
     constructor() {
         this.searchInput = document.querySelector('.search__input')
+        this.coinsList = document.querySelector('.search__list')
     }
 }
 
@@ -57,8 +58,21 @@ class App {
 
     _searchType(e) {
         const value = e.currentTarget.value.toLowerCase()
+        this.DOM.coinsList.innerHTML = ''
+        if (!this.DOM.searchInput.value) return
         this.coins.forEach(coin => {
             if (coin.name.toLowerCase().includes(value)) {
+                const html = `
+                <li class="list__item coin">
+                    <img
+                        src="${coin.iconUrl}"
+                        alt="${coin.name}"
+                        class="coin__logo"
+                    />
+                    <p class="coin__name">${coin.name}</p>
+                </li>
+                `
+                this.DOM.coinsList.insertAdjacentHTML('beforeend', html)
                 console.log(coin.name)
             }
         })
