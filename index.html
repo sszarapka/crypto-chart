@@ -9,63 +9,84 @@
             src="https://kit.fontawesome.com/d078e3e1b8.js"
             crossorigin="anonymous"
         ></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Jura:wght@500;700&family=Russo+One&display=swap"
+            rel="stylesheet"
+        />
         <link rel="stylesheet" href="SCSS/style.scss" />
     </head>
     <body>
         <div class="page">
-            <header class="header">
-                <img src="IMG/tomato-logo.png" alt="" class="logo" />
-                <div class="search-container">
-                    <div class="header__search search">
-                        <div class="search-input-container">
-                            <input type="text" class="search__input" />
-                            <div class="search__input--line"></div>
+            <div class="container">
+                <header class="header">
+                    <img src="IMG/tomato-logo.png" alt="" class="logo" />
+                    <div class="search-container">
+                        <div class="header__search search">
+                            <div class="search-input-container">
+                                <input type="text" class="search__input" />
+                                <div class="search__input--line"></div>
+                            </div>
+                            <button class="search__button">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
-                        <button class="search__button">
-                            <i class="fas fa-search"></i>
-                        </button>
+                        <ul class="search__list list"></ul>
                     </div>
-                    <ul class="search__list list">
-                        <!-- <li class="list__item coin">
-                            <img
-                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
-                                alt=""
-                                class="coin__logo"
-                            />
-                            <p class="coin__name">Bitcoin</p>
-                        </li>
-                        <li class="list__item coin">
-                            <img
-                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
-                                alt=""
-                                class="coin__logo"
-                            />
-                            <p class="coin__name">Bitcoin</p>
-                        </li>
-                        <li class="list__item coin">
-                            <img
-                                src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
-                                alt=""
-                                class="coin__logo"
-                            />
-                            <p class="coin__name">Bitcoin</p>
-                        </li> -->
-                    </ul>
-                </div>
-            </header>
-            <main class="main">
-                <h2 class="main__name">Chart</h2>
-                <div class="main__chart"></div>
-            </main>
+                </header>
+                <main class="main-border">
+                    <div class="main">
+                        <div class="main__data">
+                            <h2 class="data__name name">
+                                <img
+                                    src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg"
+                                    alt=""
+                                    class="name__logo"
+                                />Bitcoin
+                            </h2>
+                            <div class="data__price price">
+                                <p class="price__value">$40,32143</p>
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                        </div>
+                        <div class="main__chart"></div>
+                        <div class="border"></div>
+                    </div>
+                </main>
 
-            <section class="data">
-                <div class="data__item">1</div>
-                <div class="data__item">2</div>
-                <div class="data__item">3</div>
-                <div class="data__item">4</div>
-            </section>
+                <section class="data-border">
+                    <div class="data">
+                        <div class="data__item item">
+                            <p class="item__name">Zmiana Ceny</p>
+                            <p class="item__value">1,223</p>
+                        </div>
+                        <div class="data__item item">
+                            <p class="item__name">Volume 24h</p>
+                            <p class="item__value">1,223,234</p>
+                        </div>
+                        <div class="data__item item">
+                            <p class="item__name">Kapitalizacja rynkowa</p>
+                            <p class="item__value">1,223,234,432,34</p>
+                        </div>
+                        <div class="data__item item">
+                            <p class="item__name">Cena Bitcoin</p>
+                            <p class="item__value">1,223</p>
+                        </div>
+                        <div class="data__item item">
+                            <p class="item__name">Pozycja rynkowa</p>
+                            <p class="item__value">#1</p>
+                        </div>
+                    </div>
+                </section>
 
-            <footer class="footer">&copy Stanisław Szarapka</footer>
+                <footer class="footer">
+                    &copy Stanisław Szarapka 2021
+                    <a href="https://github.com/pedzel10/pomidoro-timer"
+                        ><i class="fab fa-github"></i
+                    ></a>
+                </footer>
+            </div>
         </div>
         <script src="index.js"></script>
     </body>
