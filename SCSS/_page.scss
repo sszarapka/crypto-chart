@@ -1,13 +1,41 @@
 .page {
-  display: grid;
-  //grid-gap: 20px;
-  grid-template-columns: auto;
-  grid-template-rows: 1fr 8fr 6fr 1fr;
-  grid-template-areas:
-    "header"
-    "chart"
-    "data"
-    "footer";
+    background-color: $grey;
+    .container {
+        display: grid;
+        row-gap: 20px;
+        column-gap: 0px;
+        grid-template-columns: auto;
+        grid-template-rows: 1fr 8fr 6fr 1fr;
+        grid-template-areas:
+            'header'
+            'chart'
+            'data'
+            'footer';
+        width: 90%;
+        margin: 0 auto;
+        min-height: 100vh;
+    }
+}
+@media (orientation: portrait) and (min-width: 760px) {
+    .page {
+        .container {
+            width: 60%;
+        }
+    }
+}
 
-  background-color: $grey;
+@media (orientation: landscape) {
+    .page {
+        .container {
+            column-gap: 20px;
+            row-gap: 0px;
+            grid-template-columns: 4fr 2fr;
+            grid-template-rows: 1fr 6fr 1fr;
+            grid-template-areas:
+                'header header'
+                'chart data'
+                'footer footer';
+            font-size: 20px;
+        }
+    }
 }
