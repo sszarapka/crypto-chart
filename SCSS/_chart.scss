@@ -1,5 +1,51 @@
-.main {
-  grid-area: chart;
-  background-color: $light-grey;
-  border-radius: 5px;
+.main-border {
+    grid-area: chart;
+    border-radius: 5px;
+    color: $white;
+    font-family: sans-serif;
+    @include container-properties;
+    .main {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        border-radius: 5px;
+        background: radial-gradient(
+            farthest-side at -20% 120%,
+            $white -200%,
+            $black 100%
+        );
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        .main__data {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3%;
+            .data__name {
+                font-weight: normal;
+                font-family: $title;
+                font-size: 2em;
+                display: flex;
+                align-items: center;
+                .name__logo {
+                    margin-right: 5px;
+                    height: 1em;
+                }
+            }
+            .data__price {
+                display: flex;
+                align-items: center;
+                font-family: $title;
+                font-size: 1.7em;
+                .fa-arrow-up {
+                    margin-left: 5px;
+                    color: rgb(0, 165, 0);
+                }
+            }
+        }
+    }
 }
+.main-border::before {
+    @include animated-border;
+}
+@include border-animation;
