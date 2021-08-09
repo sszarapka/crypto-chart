@@ -10,7 +10,6 @@
     .search-container {
         position: relative;
         .header__search {
-            margin-right: 10px;
             display: flex;
             border: none;
             .search-input-container {
@@ -26,6 +25,7 @@
                     border: none;
                     margin: 0;
                     color: $white;
+                    font-size: 1em;
                 }
                 .search__input--line {
                     position: absolute;
@@ -56,20 +56,23 @@
                 padding: 4px;
                 color: $white;
                 background-color: transparent;
+                cursor: pointer;
             }
         }
         .search__list {
             position: absolute;
-
+            z-index: 2;
             left: 0;
-            right: 10px;
-            background-color: $light-grey;
+            right: 0;
+            background-color: $grey;
+            font-family: $content;
+
             //border: 1px solid $black;
             .list__item {
                 display: flex;
                 align-items: center;
-                padding: 5px 5px;
-                border-bottom: 1px solid $grey;
+                padding: 12px 10px;
+                border-bottom: 1px solid $light-grey;
                 list-style: none;
                 .coin__logo {
                     width: 25px;
