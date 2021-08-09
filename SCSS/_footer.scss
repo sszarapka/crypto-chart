@@ -1,4 +1,14 @@
 .footer {
-  grid-area: footer;
-  background-color: $dark-grey;
+    grid-area: footer;
+    color: $white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: $grey;
+    font-family: $content;
+
+    a {
+        margin-left: 10px;
+        color: $white;
+    }
 }
