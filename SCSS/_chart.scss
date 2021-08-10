@@ -20,7 +20,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
             padding: 3%;
+            font-size: 7px;
             .data__name {
                 font-weight: normal;
                 font-family: $title;
@@ -48,6 +50,21 @@
                     color: rgb(230, 28, 28);
                     animation: arrowDown 2s linear infinite;
                 }
+            }
+        }
+        @media (orientation: portrait) and (min-width: 760px) {
+            .main__data {
+                font-size: 0.9em;
+            }
+        }
+        @media (orientation: landscape) and (min-width: 1024px) {
+            .main__data {
+                font-size: 0.7em;
+            }
+        }
+        @media (orientation: landscape) and (min-width: 1300px) {
+            .main__data {
+                font-size: 1em;
             }
         }
     }

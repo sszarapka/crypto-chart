@@ -4,7 +4,6 @@
     border-radius: 5px;
     @include container-properties;
     .data {
-        padding-top: 20px;
         position: absolute;
         top: 1px;
         left: 1px;
@@ -39,8 +38,25 @@
             color: #ffa500;
         }
     }
+    @media (orientation: landscape) {
+        .data__item {
+            font-size: 0.4em;
+        }
+    }
+    @media (orientation: portrait) and (min-width: 760px) {
+        .data__item {
+            font-size: 1.4em;
+        }
+    }
     @media (orientation: landscape) and (min-width: 1024px) {
-        //font-size: 1.2em;
+        .data__item {
+            font-size: 0.8em;
+        }
+    }
+    @media (orientation: landscape) and (min-width: 1300px) {
+        .data__item {
+            font-size: 0.9em;
+        }
     }
 
     .data__item:last-child {

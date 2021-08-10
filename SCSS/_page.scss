@@ -18,6 +18,7 @@
         width: 80%;
         margin: 0 auto;
         min-height: 100vh;
+        font-size: 13px;
     }
 }
 @media (orientation: portrait) and (min-width: 760px) {
@@ -43,3 +44,11 @@
         }
     }
 }
+
+// @media (orientation: portrait) and (min-width: 760px) {
+//     .page {
+//         .container {
+//             font-size: 20px;
+//         }
+//     }
+// }
