@@ -88,15 +88,38 @@ class App {
         this.DOM.coinsList.innerHTML = ''
         this._closeSearchList()
     }
-
+    _getRelevancy(coinName, value) {
+        const name = coinName.toLowerCase()
+        const inputValue = value.toLowerCase()
+        if (name === inputValue) return 0
+        else if (name.startsWith(inputValue)) return 1
+        else return 2
+    }
     _searchType(e) {
         this.DOM.coinsList.style.display = 'block'
         const value = e.currentTarget.value.toLowerCase()
+
+        let coinsToDisplay = []
         this.DOM.coinsList.innerHTML = ''
         if (!this.DOM.searchInput.value) return
         this.#coins.forEach(coin => {
-            if (coin.name.toLowerCase().includes(value)) {
-                const html = `
+            const name = coin.name.toLowerCase()
+            if (name.includes(value)) {
+                coinsToDisplay.push(coin)
+            }
+        })
+        coinsToDisplay.sort(
+            (coinA, coinB) =>
+                this._getRelevancy(coinA.name, value) -
+                this._getRelevancy(coinB.name, value)
+        )
+
+        this._displayCoinsInSearchList(coinsToDisplay)
+    }
+
+    _displayCoinsInSearchList(coins) {
+        coins.forEach(coin => {
+            const html = `
                 <li class="list__item coin" data-id="${coin.uuid}">
                     <img
                         src="${coin.iconUrl}"
@@ -107,10 +130,10 @@ class App {
                     <p class="coin__name" data-id="${coin.uuid}">${coin.name}</p>
                 </li>
                 `
-                this.DOM.coinsList.insertAdjacentHTML('beforeend', html)
-            }
+            this.DOM.coinsList.insertAdjacentHTML('beforeend', html)
         })
     }
+
     _displayData(coin) {
         this.DOM.coinName.innerHTML = `
         <img
