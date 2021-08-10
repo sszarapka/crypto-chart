@@ -37,12 +37,53 @@
                 align-items: center;
                 font-family: $title;
                 font-size: 1.7em;
+                overflow: hidden;
                 .fa-arrow-up {
                     margin-left: 5px;
-                    color: rgb(0, 165, 0);
+                    color: #00a500;
+                    animation: arrowUp 2s linear infinite;
+                }
+                .fa-arrow-down {
+                    margin-left: 5px;
+                    color: rgb(230, 28, 28);
+                    animation: arrowDown 2s linear infinite;
                 }
             }
         }
+    }
+}
+@keyframes arrowUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    30% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes arrowDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
     }
 }
 .main-border::before {

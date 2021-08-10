@@ -150,8 +150,10 @@ class App {
         console.log(coin.color)
 
         if (coin.change > 0) {
+            this.DOM.coinArrow.classList = 'fas fa-arrow-up'
         }
         if (coin.change < 0) {
+            this.DOM.coinArrow.classList = 'fas fa-arrow-down'
         }
     }
 

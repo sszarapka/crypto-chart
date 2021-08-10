@@ -35,6 +35,9 @@
         color: $white;
         font-size: 0.9em;
         font-family: $content;
+        .fa-bitcoin {
+            color: #ffa500;
+        }
     }
     @media (orientation: landscape) and (min-width: 1024px) {
         //font-size: 1.2em;
