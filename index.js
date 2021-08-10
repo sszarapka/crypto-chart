@@ -5,18 +5,44 @@ class Elements {
     constructor() {
         this.searchInput = document.querySelector('.search__input')
         this.coinsList = document.querySelector('.search__list')
+        this.coinName = document.querySelector('.data__name')
+        this.coinLogo = document.querySelector('.name__logo')
+        this.coinPrice = document.querySelector('.price__value')
+        this.coinArrow = document
+            .querySelector('.data__price')
+            .querySelector('i')
+        this.priceChange = document.querySelector('.price-change')
+        this.volume24h = document.querySelector('.volume-24h')
+        this.marketCap = document.querySelector('.market-cap')
+        this.btcPrice = document.querySelector('.btc-price')
+        this.rank = document.querySelector('.rank')
+        this.main = document.querySelector('.main')
+        this.data = document.querySelector('.data')
     }
 }
 
 class App {
+    #coins = []
     constructor() {
         this.DOM = new Elements()
-        this.coins = []
+
         this._getCoins()
 
         this.DOM.searchInput.addEventListener(
             'input',
             this._searchType.bind(this)
+        )
+        this.DOM.coinsList.addEventListener(
+            'click',
+            this._getCoinData.bind(this)
+        )
+        document.addEventListener(
+            'click',
+            this._closeSearchListEvent.bind(this)
+        )
+        this.DOM.searchInput.addEventListener(
+            'focus',
+            () => (this.DOM.coinsList.style.display = 'block')
         )
     }
     async _getCoins() {
@@ -41,41 +67,100 @@ class App {
                 name: coin.name,
                 iconUrl: coin.iconUrl,
                 color: coin.color,
-                price: coin.price,
+                price: parseFloat(coin.price).toFixed(6),
 
                 rank: coin.rank,
-                change: coin.change,
-                volume24h: coin['24hVolume'],
+                change: parseFloat(coin.change).toFixed(6),
+                volume24h: parseFloat(coin['24hVolume']).toFixed(2),
                 sparkline: coin.sparkline,
-                marketCap: coin.marketCap,
-                btcPrice: coin.btcPrice,
+                marketCap: parseInt(coin.marketCap),
+                btcPrice: parseFloat(coin.btcPrice).toFixed(6),
             }
-            this.coins.push(coinData)
+            this.#coins.push(coinData)
         })
-        console.log(this.coins)
-        // console.log(data.data.coins[0]['24hVolume'])
+    }
+
+    _getCoinData(e) {
+        const id = e.target.dataset.id
+        const coin = this.#coins.find(coin => coin.uuid == id)
+        this.DOM.searchInput.value = ''
+        this._displayData(coin)
+        this.DOM.coinsList.innerHTML = ''
+        this._closeSearchList()
     }
 
     _searchType(e) {
+        this.DOM.coinsList.style.display = 'block'
         const value = e.currentTarget.value.toLowerCase()
         this.DOM.coinsList.innerHTML = ''
         if (!this.DOM.searchInput.value) return
-        this.coins.forEach(coin => {
+        this.#coins.forEach(coin => {
             if (coin.name.toLowerCase().includes(value)) {
                 const html = `
-                <li class="list__item coin">
+                <li class="list__item coin" data-id="${coin.uuid}">
                     <img
                         src="${coin.iconUrl}"
                         alt="${coin.name}"
                         class="coin__logo"
+                        data-id="${coin.uuid}"
                     />
-                    <p class="coin__name">${coin.name}</p>
+                    <p class="coin__name" data-id="${coin.uuid}">${coin.name}</p>
                 </li>
                 `
                 this.DOM.coinsList.insertAdjacentHTML('beforeend', html)
-                console.log(coin.name)
             }
         })
+    }
+    _displayData(coin) {
+        this.DOM.coinName.innerHTML = `
+        <img
+            src="${coin.iconUrl}"
+            alt=""
+            class="name__logo"
+        />${coin.name}
+        `
+        this.DOM.coinPrice.textContent =
+            '$' + coin.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        this.DOM.priceChange.textContent =
+            '$' + coin.change.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        this.DOM.volume24h.textContent =
+            '$' +
+            coin.volume24h.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        this.DOM.marketCap.textContent =
+            '$' +
+            coin.marketCap.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        this.DOM.btcPrice.innerHTML =
+            '<i class="fab fa-bitcoin"></i> ' +
+            coin.btcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        this.DOM.rank.textContent = '#' + coin.rank
+
+        this.DOM.main.style.background = `radial-gradient(
+            farthest-side at -20% 120%,
+            ${coin.color} -200%,
+            #0e0e0f 100%
+        )`
+
+        this.DOM.data.style.background = `radial-gradient(
+            farthest-side at -20% 120%,
+            ${coin.color} -200%,
+            #0e0e0f 100%
+        )`
+
+        document.documentElement.style.setProperty('--coin-color', coin.color)
+        console.log(coin.color)
+
+        if (coin.change > 0) {
+        }
+        if (coin.change < 0) {
+        }
+    }
+
+    _closeSearchListEvent(e) {
+        if (e.target.classList.contains('search__input')) return
+        this.DOM.coinsList.style.display = 'none'
+    }
+    _closeSearchList() {
+        this.DOM.coinsList.style.display = 'none'
     }
 }
 
