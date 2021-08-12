@@ -1,5 +1,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
+import Chart from 'chart.js/auto'
+import 'chartjs-adapter-date-fns'
 
 class Elements {
     constructor() {
@@ -18,6 +20,9 @@ class Elements {
         this.rank = document.querySelector('.rank')
         this.main = document.querySelector('.main')
         this.data = document.querySelector('.data')
+        this.timePeriod = document.querySelector('.chart__period')
+        this.timePeriodButtons = document.querySelectorAll('.period__button')
+        this.period24h = document.querySelector('.period24')
     }
 }
 
@@ -27,7 +32,8 @@ class App {
         this.DOM = new Elements()
 
         this._getCoins()
-
+        this.priceChart
+        this.currentCoin
         this.DOM.searchInput.addEventListener(
             'input',
             this._searchType.bind(this)
@@ -44,12 +50,15 @@ class App {
             'focus',
             () => (this.DOM.coinsList.style.display = 'block')
         )
+        window.addEventListener('resize', this._setChartAspectRatio.bind(this))
+        this.DOM.timePeriod.addEventListener(
+            'click',
+            this._changeTimePeriod.bind(this)
+        )
     }
-    async _getCoins() {
-        const url = `https://api.coinranking.com/v2/coins/`
+
+    async _getData(url, apiKey) {
         const proxyUrl = 'https://thingproxy.freeboard.io/fetch/'
-        const apiKey =
-            'coinranking63a60ce1bc0426d018e92fbc6c02e2453ddab0e6f8df5d50'
 
         const res = await fetch(proxyUrl + url, {
             method: 'GET',
@@ -59,14 +68,25 @@ class App {
                 'Access-Control-Allow-Origin': '*',
             },
         })
-        const data = await res.json()
+
+        return await res.json()
+    }
+
+    async _getCoins() {
+        const data = await this._getData(
+            `https://api.coinranking.com/v2/coins/`,
+            'coinranking63a60ce1bc0426d018e92fbc6c02e2453ddab0e6f8df5d50'
+        )
         data.data.coins.forEach(coin => {
             const coinData = {
                 uuid: coin.uuid,
                 symbol: coin.symbol,
                 name: coin.name,
                 iconUrl: coin.iconUrl,
-                color: coin.color,
+                color:
+                    coin.color == '#000000' || !coin.color
+                        ? '#ffffff'
+                        : coin.color,
                 price: parseFloat(coin.price).toFixed(6),
 
                 rank: coin.rank,
@@ -78,13 +98,19 @@ class App {
             }
             this.#coins.push(coinData)
         })
+        console.log(data)
     }
 
-    _getCoinData(e) {
+    async _getCoinData(e) {
         const id = e.target.dataset.id
         const coin = this.#coins.find(coin => coin.uuid == id)
         this.DOM.searchInput.value = ''
-        this._displayData(coin)
+
+        const data = await this._getPeriodData('24h', coin.uuid)
+        let xLabels = data.xLabels
+        const sparkline = data.sparkline
+
+        this._displayData(coin, sparkline, this._24hours(xLabels))
         this.DOM.coinsList.innerHTML = ''
         this._closeSearchList()
     }
@@ -134,7 +160,8 @@ class App {
         })
     }
 
-    _displayData(coin) {
+    _displayData(coin, sparkline, xLabels) {
+        this.currentCoin = coin
         this.DOM.coinName.innerHTML = `
         <img
             src="${coin.iconUrl}"
@@ -178,6 +205,11 @@ class App {
         if (coin.change < 0) {
             this.DOM.coinArrow.classList = 'fas fa-arrow-down'
         }
+        document
+            .querySelector('.period__button--active')
+            .classList.remove('period__button--active')
+        this.DOM.period24h.classList.add('period__button--active')
+        this._displayChart(sparkline, coin.color, xLabels, '24h')
     }
 
     _closeSearchListEvent(e) {
@@ -186,6 +218,175 @@ class App {
     }
     _closeSearchList() {
         this.DOM.coinsList.style.display = 'none'
+    }
+
+    _displayChart(sparkline, color = '#ffffff', xLabels, period) {
+        const chart = document.getElementById('chart').getContext('2d')
+        if (this.priceChart) this.priceChart.destroy()
+
+        const newSparkline = sparkline.map(data => parseFloat(data))
+
+        Chart.defaults.plugins.legend = false
+
+        this.priceChart = new Chart(chart, {
+            type: 'line',
+            data: {
+                labels: xLabels,
+                datasets: [
+                    {
+                        label: false,
+                        data: newSparkline,
+                        fill: false,
+                        borderColor: color,
+                        tension: 0,
+                        pointBackgroundColor: 'transparent',
+                        pointBorderWidth: '0',
+                        borderJoinStyle: 'round',
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: this._determineTicksLimit(period),
+                            maxRotation: 0,
+                        },
+                    },
+                },
+            },
+        })
+        this.priceChart.options.scales.x.ticks.maxTicksLimit = 7
+        this.priceChart.options.scales['y'].ticks.color = '#aaa'
+        this.priceChart.options.scales['x'].ticks.color = '#aaa'
+        //this.priceChart.options.xAxes.ticks.maxTicksLimit = 10
+
+        this._setChartAspectRatio()
+    }
+
+    _determineTicksLimit(period) {
+        if (period == '24h') return 12
+        if (period == '7d') return 7
+        if (period == '30d') return 10
+        if (period == '1y') return 12
+        if (period == '5y') return 5
+    }
+
+    _setChartAspectRatio() {
+        if (!this.priceChart) return
+        if (screen.orientation.type == 'portrait-primary')
+            this.priceChart.options.aspectRatio = 1.3
+        else {
+            console.log('lands')
+
+            this.priceChart.options.aspectRatio = 2
+        }
+    }
+
+    async _changeTimePeriod(e) {
+        const button = e.target
+        document
+            .querySelector('.period__button--active')
+            .classList.remove('period__button--active')
+        button.classList.add('period__button--active')
+
+        const period = e.target.dataset.period
+
+        const data = await this._getPeriodData(period, this.currentCoin.uuid)
+        let xLabels = data.xLabels
+        const sparkline = data.sparkline
+
+        if (period == '24h') xLabels = this._24hours(xLabels)
+
+        if (period == '7d') xLabels = this._7days(xLabels)
+
+        if (period == '30d') xLabels = this._30days(xLabels)
+
+        if (period == '1y') xLabels = this._1year(xLabels)
+
+        if (period == '5y') xLabels = this._5years(xLabels)
+
+        this._displayChart(sparkline, this.currentCoin.color, xLabels, period)
+    }
+
+    async _getPeriodData(period, uuid) {
+        const res = await this._getData(
+            `https://api.coinranking.com/v2/coin/${uuid}/history?timePeriod=${period}`,
+            'coinranking63a60ce1bc0426d018e92fbc6c02e2453ddab0e6f8df5d50'
+        )
+        const data = res.data.history
+
+        let sparkline = []
+        let xLabels = []
+
+        data.forEach(item => {
+            let date = new Date(0)
+            date.setUTCSeconds(item.timestamp)
+
+            sparkline.push(item.price)
+            xLabels.push(date)
+        })
+
+        return {
+            sparkline,
+            xLabels,
+        }
+    }
+
+    _24hours(xLabels) {
+        return xLabels.map(
+            label => label.getHours().toString().padStart(2, '0') + ':00'
+        )
+    }
+
+    _7days(xLabels) {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        return xLabels.map(label => days[label.getDay()])
+    }
+
+    _30days(xLabels) {
+        const months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ]
+
+        return xLabels.map(
+            label => label.getDate() + ' ' + months[label.getMonth()]
+        )
+    }
+
+    _1year(xLabels) {
+        const months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ]
+
+        return xLabels.map(label => months[label.getMonth()])
+    }
+
+    _5years(xLabels) {
+        return xLabels.map(label => label.getFullYear())
     }
 }
 
