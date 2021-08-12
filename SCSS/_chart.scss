@@ -67,6 +67,46 @@
                 font-size: 1em;
             }
         }
+        .main__chart {
+            display: flex;
+            justify-content: center;
+
+            flex-direction: column;
+            height: 100%;
+            padding: 1%;
+            padding-bottom: 3%;
+
+            position: relative;
+            .chart__period {
+                top: 10%;
+                right: 3%;
+                align-self: flex-end;
+                .period__button {
+                    background-color: transparent;
+                    border: none;
+                    color: $white;
+                    padding: 5px 10px;
+                    font-size: 0.8em;
+                    font-family: $content;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+                .period__button:hover {
+                    background-color: #222;
+                }
+                .period__button--active {
+                    background-color: $light-grey;
+                }
+                @media (orientation: landscape) {
+                    font-size: 0.6em;
+                }
+
+                @media (orientation: landscape) and (min-width: 1300px) {
+                    font-size: 0.9em;
+                }
+            }
+        }
     }
 }
 @keyframes arrowUp {

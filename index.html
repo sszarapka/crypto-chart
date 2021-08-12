@@ -21,7 +21,7 @@
         <div class="page">
             <div class="container">
                 <header class="header">
-                    <img src="IMG/tomato-logo.png" alt="" class="logo" />
+                    <img src="IMG/logo.png" alt="" class="logo" />
                     <div class="search-container">
                         <div class="header__search search">
                             <div class="search-input-container">
@@ -46,7 +46,40 @@
                                 <i class=""></i>
                             </div>
                         </div>
-                        <div class="main__chart"></div>
+                        <div class="main__chart">
+                            <div class="chart__period">
+                                <button
+                                    class="
+                                        period__button period__button--active
+                                        period24
+                                    "
+                                    data-period="24h"
+                                >
+                                    24H</button
+                                ><button
+                                    class="period__button"
+                                    data-period="7d"
+                                >
+                                    7D</button
+                                ><button
+                                    class="period__button"
+                                    data-period="30d"
+                                >
+                                    30D</button
+                                ><button
+                                    class="period__button"
+                                    data-period="1y"
+                                >
+                                    1Y</button
+                                ><button
+                                    class="period__button"
+                                    data-period="5y"
+                                >
+                                    5Y
+                                </button>
+                            </div>
+                            <canvas id="chart"></canvas>
+                        </div>
                         <div class="border"></div>
                     </div>
                 </main>
@@ -84,6 +117,7 @@
                 </footer>
             </div>
         </div>
+
         <script src="index.js"></script>
     </body>
 </html>
