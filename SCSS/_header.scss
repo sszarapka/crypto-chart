@@ -5,7 +5,12 @@
     grid-area: header;
     background-color: $grey;
     .logo {
-        width: 50px;
+        width: 25px;
+    }
+    @media (orientation: landscape) and (min-width: 1300px) {
+        .logo {
+            width: 55px;
+        }
     }
     .search-container {
         position: relative;
