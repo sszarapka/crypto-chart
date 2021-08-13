@@ -23,6 +23,8 @@ class Elements {
         this.timePeriod = document.querySelector('.chart__period')
         this.timePeriodButtons = document.querySelectorAll('.period__button')
         this.period24h = document.querySelector('.period24')
+        this.chart = document.getElementById('chart')
+        this.chartLoader = document.querySelector('.chart__loading')
     }
 }
 
@@ -98,7 +100,6 @@ class App {
             }
             this.#coins.push(coinData)
         })
-        console.log(data)
     }
 
     async _getCoinData(e) {
@@ -197,7 +198,6 @@ class App {
         )`
 
         document.documentElement.style.setProperty('--coin-color', coin.color)
-        console.log(coin.color)
 
         if (coin.change > 0) {
             this.DOM.coinArrow.classList = 'fas fa-arrow-up'
@@ -221,7 +221,11 @@ class App {
     }
 
     _displayChart(sparkline, color = '#ffffff', xLabels, period) {
-        const chart = document.getElementById('chart').getContext('2d')
+        //stop loding
+        this.DOM.chart.style.filter = 'blur(0px)'
+        this.DOM.chartLoader.style.display = 'none'
+
+        const chart = this.DOM.chart.getContext('2d')
         if (this.priceChart) this.priceChart.destroy()
 
         const newSparkline = sparkline.map(data => parseFloat(data))
@@ -277,14 +281,14 @@ class App {
         if (!this.priceChart) return
         if (screen.orientation.type == 'portrait-primary')
             this.priceChart.options.aspectRatio = 1.3
-        else {
-            console.log('lands')
-
-            this.priceChart.options.aspectRatio = 2
-        }
+        else this.priceChart.options.aspectRatio = 2
     }
 
     async _changeTimePeriod(e) {
+        //start loading
+        this.DOM.chart.style.filter = 'blur(30px)'
+        this.DOM.chartLoader.style.display = 'flex'
+
         const button = e.target
         document
             .querySelector('.period__button--active')
@@ -294,6 +298,8 @@ class App {
         const period = e.target.dataset.period
 
         const data = await this._getPeriodData(period, this.currentCoin.uuid)
+        console.log(data)
+
         let xLabels = data.xLabels
         const sparkline = data.sparkline
 
@@ -346,20 +352,8 @@ class App {
     }
 
     _30days(xLabels) {
-        const months = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-        ]
+        // prettier-ignore
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',   'Oct', 'Nov', 'Dec']
 
         return xLabels.map(
             label => label.getDate() + ' ' + months[label.getMonth()]
@@ -367,20 +361,8 @@ class App {
     }
 
     _1year(xLabels) {
-        const months = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-        ]
+        // prettier-ignore
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct',  'Nov', 'Dec']
 
         return xLabels.map(label => months[label.getMonth()])
     }
