@@ -53,7 +53,7 @@ class App {
 
     async _getData(url, apiKey) {
         // const proxyUrl = 'https://thingproxy.freeboard.io/fetch/'
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+        const proxyUrl = 'https://sleepy-meadow-69476.herokuapp.com/'
 
         const res = await fetch(proxyUrl + url, {
             method: 'GET',
@@ -64,7 +64,7 @@ class App {
             },
         })
 
-        return await res.json()
+        return res.json()
     }
 
     async _getCoins() {
