@@ -99,6 +99,7 @@ class App {
         const id = e.target.dataset.id
         const coin = this.#coins.find(coin => coin.uuid == id)
         this.DOM.searchInput.value = ''
+        this.DOM.chartLoader.style.display = 'flex'
 
         const data = await this._getPeriodData('24h', coin.uuid)
         let xLabels = data.xLabels
