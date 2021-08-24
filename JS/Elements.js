@@ -20,5 +20,6 @@ export class Elements {
         this.period24h = document.querySelector('.period24')
         this.chart = document.getElementById('chart')
         this.chartLoader = document.querySelector('.chart__loading')
+        this.searchButton = document.querySelector('.fa-search')
     }
 }

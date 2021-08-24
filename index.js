@@ -52,19 +52,26 @@ class App {
     }
 
     async _getData(url, apiKey) {
-        // const proxyUrl = 'https://thingproxy.freeboard.io/fetch/'
-        const proxyUrl = 'https://sleepy-meadow-69476.herokuapp.com/'
+        try {
+            // const proxyUrl = 'https://thingproxy.freeboard.io/fetch/'
+            const proxyUrl = 'https://sleepy-meadow-69476.herokuapp.com/'
 
-        const res = await fetch(proxyUrl + url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': `${apiKey}`,
-                'Access-Control-Allow-Origin': '*',
-            },
-        })
+            const res = await fetch(proxyUrl + url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${apiKey}`,
+                    'Access-Control-Allow-Origin': '*',
+                },
+            })
+            if (res.ok) this.DOM.searchButton.style.animation = 'pop 0.4s ease'
 
-        return res.json()
+            if (!res.ok) throw new Error('Problem with getting data')
+
+            return res.json()
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 
     async _getCoins() {
@@ -352,13 +359,13 @@ class App {
     }
 
     _7days(xLabels) {
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        const days = ['Ndz', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob']
         return xLabels.map(label => days[label.getDay()])
     }
 
     _30days(xLabels) {
         // prettier-ignore
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',   'Oct', 'Nov', 'Dec']
+        const months = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru']
 
         return xLabels.map(
             label => label.getDate() + ' ' + months[label.getMonth()]
@@ -367,7 +374,7 @@ class App {
 
     _1year(xLabels) {
         // prettier-ignore
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct',  'Nov', 'Dec']
+        const months = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru']
 
         return xLabels.map(label => months[label.getMonth()])
     }
