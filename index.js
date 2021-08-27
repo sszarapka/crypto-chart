@@ -2,6 +2,7 @@ import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-date-fns'
+import key from './JS/apikeys.js'
 import { Elements } from './JS/Elements.js'
 
 window.mobileCheck = function () {
@@ -77,7 +78,7 @@ class App {
     async _getCoins() {
         const data = await this._getData(
             `https://api.coinranking.com/v2/coins/`,
-            'coinranking63a60ce1bc0426d018e92fbc6c02e2453ddab0e6f8df5d50'
+            key
         )
         data.data.coins.forEach(coin => {
             const coinData = {
