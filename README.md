@@ -22,5 +22,4 @@
 ## Author
 
 Stanisław Szarapka
-<br><br>
-[![Netlify Status](https://api.netlify.com/api/v1/badges/94c54644-4158-4c7c-948e-ac51d8346a25/deploy-status)](https://app.netlify.com/sites/chart-crypto/deploys)
+
